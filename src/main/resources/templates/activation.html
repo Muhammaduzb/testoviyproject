@@ -4,12 +4,23 @@
     <meta charset="UTF-8">
     <title>signup</title>
     <style>
-        .row{padding-top: 1rem;}
-        body{background-color: #ffffff;color: #f1f1f1;}
-        .container{background-color: white;border-radius: 20px;}
+        .row {
+            padding-top: 1rem;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #f1f1f1;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 20px;
+        }
     </style>
     <link rel="stylesheet" href="../static/assets/css/bootstrap.css" th:href="@{/assets/css/bootstrap.css}"/>
-    <link rel="stylesheet" href="../static/assets/plugins/toaster/dist/jquery.toast.min.css" th:href="@{/assets/plugins/jquery-toast-plugin-master/dist/jquery.toast.min.css}"/>
+    <link rel="stylesheet" href="../static/assets/plugins/toaster/dist/jquery.toast.min.css"
+          th:href="@{/assets/plugins/jquery-toast-plugin-master/dist/jquery.toast.min.css}"/>
 
 </head>
 <body>
@@ -20,12 +31,14 @@
                 <div class="card-header">
                     <h3 class="text-center text-success">Activation</h3>
                 </div>
-                <form th:action="@{/auth/activate/user}" th:object="${activationRequest}" method="post">
+                <form method="post">
                     <div class="row">
                         <div class="col-md-12">
                             <label for="activeCode">Enter active code<sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" placeholder="Enter Activation Code" id="activeCode"  th:field="*{activeCode}"/>
-                            <span class="text-danger" th:if="${#fields.hasErrors('activeCode')}" th:errors="*{activeCode}"></span>
+                            <input type="text" class="form-control" required pattern="^\d{5}$"
+                                   oninvalid="this.setCustomValidity('Enter a 5-digit zipcode')"
+                                   oninput="setCustomValidity('')" placeholder="Enter Activation Code" id="activeCode"/>
+                            <!--                            <span class="text-danger" th:if="${#fields.hasErrors('activeCode')}" th:errors="*{activeCode}"></span>-->
                         </div>
                     </div>
                     <div class="row">
@@ -46,6 +59,26 @@
     </div>
 
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#registerbtn").click(function () {
+            $.ajax({
+                type: 'POST',
+                url: "/auth/activate/user/" + ($("#activeCode").val()),
+                async: false,
+                success: function (order) {
+                    // alert("code is success, code successs ligini sezmaydi buyerda")
+                },
+                error: function (data) {
+                    alert(data);
+                }
+            })
+        })
+    });
+
+
+</script>
 
 <script th:href="@{/assets/js/bootstrap.js}"></script>
 </body>

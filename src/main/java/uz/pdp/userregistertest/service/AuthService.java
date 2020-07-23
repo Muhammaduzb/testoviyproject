@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uz.pdp.userregistertest.entity.User;
 import uz.pdp.userregistertest.model.Result;
 import uz.pdp.userregistertest.repository.UserRepository;
@@ -28,22 +29,22 @@ public class AuthService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username));
     }
 
-    public Result activate(String activCode){
-        Result result=new Result();
-        if(userRepository.findByActivCode(activCode).isPresent()){
-            User user=userRepository.findByActivCode(activCode).get();
+    public Result activate(String activCode) {
+        Result result = new Result();
+        if (userRepository.findByActivCode(activCode).isPresent()) {
+            User user = userRepository.findByActivCode(activCode).get();
             user.setEnabled(true);
             user.setActivCode(null);
             userRepository.save(user);
             authWithoutPassword(user);
             result.setSuccess(true);
-        }else{
+        } else {
             result.setSuccess(false);
         }
         return result;
     }
 
-    public void authWithoutPassword(User user){
+    public void authWithoutPassword(User user) {
 
         List<GrantedAuthority> roles = (List<GrantedAuthority>) user.getAuthorities();
 

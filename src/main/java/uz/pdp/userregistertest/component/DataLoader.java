@@ -15,14 +15,18 @@ public class DataLoader implements CommandLineRunner {
     @Value("${spring.datasource.initialization-mode}")
     String initialMode;
 
-    @Autowired
-    UserRepository userRepository;
+
+    private UserRepository userRepository;
 
     @Autowired
     RoleRepository roleRepository;
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    public DataLoader(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void run(String... args) throws Exception {

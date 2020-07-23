@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import uz.pdp.userregistertest.model.Result;
 import uz.pdp.userregistertest.payload.ActivationRequest;
 import uz.pdp.userregistertest.payload.RegisterReq;
@@ -36,38 +34,30 @@ public class AuthController {
         model.addAttribute("registerReq", registerReq);
         return "register";
     }
-    @GetMapping(value = {"/activate/user"})
-    public String getActivationPage(Model model, ActivationRequest activationRequest) {
-        model.addAttribute("activationRequest", activationRequest);
-        return "login";
-    }
+
+
     @PostMapping(value = {"/sign/up"})
-    public String registerUser(@Valid RegisterReq registerReq,
-                               BindingResult bindingResult,
-                               Model model) {
+    public String registerUser(@Valid RegisterReq registerReq, BindingResult bindingResult, Model model) {
         model.addAttribute("registerReq", registerReq);
         if (bindingResult.hasErrors()) {
             return "register";
         } else {
             userService.saveUser(registerReq);
+//            return "redirect:/user/verify";
             return "activation";
         }
     }
 
 
-
-    @PostMapping("/activate/user")
-    public String getActivePage(@Valid ActivationRequest activationRequest,
-                                BindingResult bindingResult,
-                                Model model) {
-        model.addAttribute("activationRequest",activationRequest );
-        if (bindingResult.hasErrors()) {
+    @PostMapping("/activate/user/{activeCode}")
+    public String getActivePage(@PathVariable("activeCode") String activeCode) {
+        Result result = authService.activate(activeCode);
+        if (result.isSuccess()) {
+            return "redirect:/auth/sign/in";
+        } else {
             return "activation";
         }
-        else {
-            authService.activate(activationRequest.getActiveCode());
-            return "login";
-        }
+
     }
 }
 

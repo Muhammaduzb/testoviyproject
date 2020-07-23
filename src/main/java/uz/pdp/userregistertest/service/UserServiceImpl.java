@@ -4,6 +4,7 @@ package uz.pdp.userregistertest.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uz.pdp.userregistertest.entity.Role;
 import uz.pdp.userregistertest.entity.User;
 import uz.pdp.userregistertest.model.Result;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -33,10 +35,11 @@ public class UserServiceImpl implements UserService {
         Result result = new Result();
         List<Role> roles = new ArrayList<>();
         roles.add(roleRepository.getByName("ROLE_USER"));
+
         Optional<User> optional=userRepository.findByUsername(registerReq.getUsername().replace("-","")
         .replace(" ","").replace("+",""));
                 System.out.println(optional.isPresent());
-        if (optional.isPresent()) {
+                if (optional.isPresent()) {
             result.setSuccess(false);
             result.setMessage("This username or email already exist");
         } else {
