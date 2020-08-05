@@ -1,6 +1,8 @@
 package uz.pdp.userregistertest.service;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 
     @Override
@@ -45,8 +48,12 @@ public class UserServiceImpl implements UserService {
         } else {
             String random_int = String.valueOf((Math.random() * (99999 - 10000 + 1) + 10000)).substring(0,5);
             System.out.println("random:" + random_int);
-            User user=new User(registerReq.getUsername(),passwordEncoder.encode(registerReq.getPassword()),
-                    random_int, roles);
+            User user=new User(registerReq.getUsername(),
+                    passwordEncoder.encode(registerReq.getPassword()),
+                    random_int,
+                    roles);
+                    logger.debug(String.format("Auto login %s successfully!", user.getUsername()));
+                    System.out.println();
             userRepository.save(user);
             result.setSuccess(true);
         }

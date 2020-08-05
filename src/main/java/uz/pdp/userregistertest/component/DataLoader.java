@@ -4,7 +4,11 @@ package uz.pdp.userregistertest.component;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Component;
 import uz.pdp.userregistertest.entity.User;
 import uz.pdp.userregistertest.repository.RoleRepository;
@@ -15,24 +19,27 @@ public class DataLoader implements CommandLineRunner {
     @Value("${spring.datasource.initialization-mode}")
     String initialMode;
 
-
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-    public DataLoader(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+//    public DataLoader(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+//        this.userRepository = userRepository;
+//        this.roleRepository = roleRepository;
+//        this.passwordEncoder = passwordEncoder;
+//    }
 
     @Override
     public void run(String... args) throws Exception {
         if (initialMode.equals("always")) {
-            userRepository.save(new User("998009990099", passwordEncoder.encode("19301"),true,
+            userRepository.save(new User("998009990099", passwordEncoder.encode("19301"),
                     roleRepository.findAll()));
         }
     }
+
 }

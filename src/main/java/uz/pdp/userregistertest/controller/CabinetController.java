@@ -29,6 +29,7 @@ public class CabinetController {
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
+        System.out.println(user);
         model.addAttribute("user", user);
         return "cabinet";
     }

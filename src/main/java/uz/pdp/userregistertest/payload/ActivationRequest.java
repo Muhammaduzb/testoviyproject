@@ -12,12 +12,16 @@ import javax.validation.constraints.Size;
  * on 21.07.2020
  */
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ActivationRequest {
 
     @Pattern(regexp = "[0-9]{5}", message = "Phone number must be 5 numbers!")
     private String activeCode;
 
+    public String getActiveCode() {
+        return activeCode;
+    }
+
+    public void setActiveCode(String activeCode) {
+        this.activeCode = activeCode;
+    }
 }

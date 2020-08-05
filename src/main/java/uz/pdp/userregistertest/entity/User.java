@@ -37,11 +37,10 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
-    public User(String username, String password,Boolean enabled, List<Role> roles) {
+    public User(String username, String password, List<Role> roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
-        this.enabled=enabled;
     }
 
     public User( String username, String password, String activCode, List<Role> roles) {

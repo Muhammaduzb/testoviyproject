@@ -11,8 +11,6 @@ $(document).ready(function () {
         columns: [
             {title: "id", data: "id"},
             {title: "name", data: "username"},
-            {title: "email", data: "email"},
-            {title: "fullName", data: "fullName"},
             {
                 title: "roles", data: "roles", render: function (data, type, row) {
                     var roleNames = '';

@@ -31,13 +31,15 @@
                 <div class="card-header">
                     <h3 class="text-center text-success">Activation</h3>
                 </div>
-                <form method="post">
+                <form method="post" th:action="@{/auth/wActivate/user}" th:object="${activationReq}">
                     <div class="row">
                         <div class="col-md-12">
-                            <label for="activeCode">Enter active code<sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" required pattern="^\d{5}$"
-                                   oninvalid="this.setCustomValidity('Enter a 5-digit zipcode')"
-                                   oninput="setCustomValidity('')" placeholder="Enter Activation Code" id="activeCode"/>
+                            <label>Enter active code<sup class="text-danger">*</sup></label>
+                            <input type="text" class="form-control" name="activeCode"/>
+<!--                                   required pattern="^\d{5}$"-->
+<!--                                   oninvalid="this.setCustomValidity('Enter a 5-digit zipcode')"-->
+<!--                                   oninput="setCustomValidity('')" placeholder="Enter Activation Code"-->
+
                             <!--                            <span class="text-danger" th:if="${#fields.hasErrors('activeCode')}" th:errors="*{activeCode}"></span>-->
                         </div>
                     </div>
@@ -60,25 +62,25 @@
 
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $("#registerbtn").click(function () {
-            $.ajax({
-                type: 'POST',
-                url: "/auth/activate/user/" + ($("#activeCode").val()),
-                async: false,
-                success: function (order) {
-                    // alert("code is success, code successs ligini sezmaydi buyerda")
-                },
-                error: function (data) {
-                    alert(data);
-                }
-            })
-        })
-    });
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        $("#registerbtn").click(function () {-->
+<!--            $.ajax({-->
+<!--                type: 'GET',-->
+<!--                url: "http://localhost/auth/activate/user/?activeCode=" + ($("#activeCode").val()),-->
+<!--                async: false,-->
+<!--                success: function () {-->
+<!--                    alert("code is success!!")-->
+<!--                },-->
+<!--                error: function (data) {-->
+<!--                    alert(data);-->
+<!--                }-->
+<!--            })-->
+<!--        })-->
+<!--    });-->
 
 
-</script>
+<!--</script>-->
 
 <script th:href="@{/assets/js/bootstrap.js}"></script>
 </body>
