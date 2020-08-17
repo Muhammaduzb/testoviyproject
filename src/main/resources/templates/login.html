@@ -16,11 +16,17 @@
                 <div class="card-body">
                     <form th:action="@{/auth/login}" method="post" class="form-group">
                         <label for="username"  class="font-weight-bold">Phone number</label>
-                        <input class="form-control" type="text" id="username" name="username" placeholder="+998 89 123 45-67">
+                        <input class="form-control" type="text" id="username" name="username" placeholder="+998 89 123 45-67"
+                               required pattern="[0-9 ()+-]{17}$"
+                               oninvalid="this.setCustomValidity('Telefon raqamingizni to`liq kiriting!')"
+                               oninput="setCustomValidity('')" maxlength="17">
                         <label for="password"  class="font-weight-bold mt-3">Password</label>
-                        <input class="form-control" type="password" id="password" name="password" placeholder="Password">
+                        <input class="form-control" type="password" id="password" name="password"
+                               required pattern="[A-Za-z0-9]{6,16}"
+                               oninvalid="this.setCustomValidity('Parol kamida 6 ta belgidan iborat! Faqat lotin alifbosidagi katta,kichik harflardan va sonlardan foydalaning!')"
+                               oninput="setCustomValidity('')" placeholder="Parol:">
                         <div class="col-md-12">
-                            <input type="submit" class="btn btn-success mt-4 mr-5" style="width: 100px" value="Sign in">
+                           <input type="submit" class="btn btn-success mt-4 mr-5" style="width: 100px" value="Sign in" maxlength="16" minlength="5">
                         </div>
                     </form>
                     <div class="col-md-12">
@@ -41,7 +47,7 @@
 <script>
     document.getElementById('username').addEventListener('input', function (e) {
         var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,2})(\d{0,3})(\d{0,2})(\d{0,2})/);
-        e.target.value = !x[2] ? x[1] : ' +' + x[1] + ' ' + x[2] + (x[3] ? ' ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '') ;
+        e.target.value = !x[2] ? x[1] : '+' + x[1] + ' ' + x[2] + (x[3] ? ' ' + x[3] : '') + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '') ;
     });
 </script>
 <!--src="/static/assets/js/bootstrap.js"-->

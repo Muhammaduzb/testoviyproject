@@ -10,7 +10,8 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterReq {
-    @Pattern(regexp = "[0-9]{12,32}", message = "Phone number must be 12 numbers. Username must be alpha numerical.")
+    @NotEmpty(message = "Iltimos telefon raqamingizni 12 ta raqamli formatda kiriting")
+    @Pattern(regexp = "[[0-9 ()+-]+$]{17}", message = "Iltimos raqamingizni to'liq kiriting!")
     private String username;
 
 //    @NotBlank(message = "Enter email address")
@@ -20,7 +21,9 @@ public class RegisterReq {
 //    @Size(min = 3, message = "Full name must be minimum 3 characters.")
 //    private String fullName;
 
-    @Size(min = 5, max = 16, message = "Password must be between 5 and 16 characters.")
+    @NotEmpty(message = "Iltimos parolni kiriting!")
+    @Size(min = 6 ,max = 16 , message = "Eng kamida 6 ta belgidan foydalaning!")
+    @Pattern(regexp = "[A-Za-z0-9]{6,16}", message = "Faqat lotin alifbosida katta,kichik harflar va raqamlardan foydalaning!")
     private String password;
 
 //    private String prePassword;

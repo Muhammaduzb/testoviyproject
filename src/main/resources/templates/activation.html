@@ -35,10 +35,10 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label>Enter active code<sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" name="activeCode"/>
-<!--                                   required pattern="^\d{5}$"-->
-<!--                                   oninvalid="this.setCustomValidity('Enter a 5-digit zipcode')"-->
-<!--                                   oninput="setCustomValidity('')" placeholder="Enter Activation Code"-->
+                            <input type="text" class="form-control" name="activeCode" maxlength="4"
+                                   required pattern="[0-9]{4}$"
+                                   oninvalid="this.setCustomValidity('Iltimos 4 honali aktiv kodni kiriting')"
+                                   oninput="setCustomValidity('')" placeholder="Aktiv kodni kiriting!"/>
 
                             <!--                            <span class="text-danger" th:if="${#fields.hasErrors('activeCode')}" th:errors="*{activeCode}"></span>-->
                         </div>

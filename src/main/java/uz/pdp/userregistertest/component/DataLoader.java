@@ -1,14 +1,8 @@
 package uz.pdp.userregistertest.component;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Component;
 import uz.pdp.userregistertest.entity.User;
 import uz.pdp.userregistertest.repository.RoleRepository;
@@ -37,9 +31,11 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         if (initialMode.equals("always")) {
-            userRepository.save(new User("998009990099", passwordEncoder.encode("19301"),
+            userRepository.save(new User("998009990099", passwordEncoder.encode("19301930"),true,
                     roleRepository.findAll()));
+
         }
     }
+
 
 }

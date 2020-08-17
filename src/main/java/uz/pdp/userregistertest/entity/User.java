@@ -20,14 +20,13 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
+// userni id isi bilan useraddress dagi id bir xil wu un alohida polya wart emas
 
     private String username;
 
 //    private String email;
 
     private String password;
-
 
     private String activCode;
 
@@ -37,9 +36,10 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
-    public User(String username, String password, List<Role> roles) {
+    public User(String username, String password,boolean enabled, List<Role> roles) {
         this.username = username;
         this.password = password;
+        this.enabled = enabled;
         this.roles = roles;
     }
 

@@ -37,11 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable().headers().frameOptions().disable().and()
                 .authorizeRequests()
                 .antMatchers("/assets/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/activation").permitAll()
                 .antMatchers("/activate/**").permitAll()
+                .antMatchers("/regions/**").permitAll()
+                .antMatchers("/book").permitAll()
+                .antMatchers("/actionBook/**").permitAll()
+                .antMatchers("/addBook/**").permitAll()
+                .antMatchers("/districts/**").permitAll()
                 .antMatchers("/admin").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/user").access("hasRole('ROLE_USER')")
                 .antMatchers("/login").permitAll()
@@ -51,9 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/cabinet")
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/")
-                .and()
-                .csrf().disable(); // 403 xatolik "Forbidden"
+                .logoutSuccessUrl("/");
+
     }
 
 //    @Bean

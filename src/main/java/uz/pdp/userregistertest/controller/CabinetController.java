@@ -2,6 +2,7 @@ package uz.pdp.userregistertest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,28 +12,55 @@ import uz.pdp.userregistertest.repository.RoleRepository;
 import uz.pdp.userregistertest.repository.UserRepository;
 import uz.pdp.userregistertest.security.SignedUser;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class CabinetController {
+
     @Autowired
     UserRepository userRepository;
+
     @Autowired
     RoleRepository roleRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @GetMapping({"/", "/cabinet"})
     public String getCabinetPage(Model model) {
-        User user = (User) SecurityContextHolder
+
+        User user =(User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
+//        user.setUsername(user.getUsername().replace("-","")
+//                .replace(" ","").replace("+",""));
+
+        //        passwordEncoder.encode(user.getPassword());
+//        new User();
+//        List<Regions> regions = regionService.getAllRegions();
+
         System.out.println(user);
+//        model.a
         model.addAttribute("user", user);
+//        model.addAttribute("regions",regions);
         return "cabinet";
     }
+//    @GetMapping({"/", "/cabinet"})
+//    public String getCabinetPage(Model model) {
+//        User user = new User();
+//
+//        user.setUsername(user.getUsername().replace("-","")
+//                .replace(" ","").replace("+",""));
+//
+//        user =  (User) SecurityContextHolder
+//                .getContext()
+//                .getAuthentication()
+//                .getPrincipal();
+//        System.out.println(user);
+//        model.addAttribute("user", user);
+//        return "cabinet";
+//    }
 
     @GetMapping("/cabinet/about")
     public String getDeveloper(Model model, @SignedUser User user) {

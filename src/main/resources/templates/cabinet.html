@@ -8,10 +8,11 @@
     <title>AppLogin | Cabinet </title>
     <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}"/>
     <link rel="stylesheet" th:href="@{/assets/css/fontawesome-all.css}">
-    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.6.3/css/all.css}" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <div layout:fragment="styles">
+      <div layout:fragment="styles">
 
     </div>
+
+
 
 </head>
 <body>
@@ -24,6 +25,12 @@
                         <div class="col-md-7 offset-3">
                             <h1 style="text-align: center"> Cabinet Page of <span th:utext="${user.getUsername()}"> </span></span></h1>
                         </div>
+
+                        <div class="col-md-7 offset-3">
+                            <div class="col-md-12 mt-3">
+                                <button id="getMyBooks" class="bg-danger ui-state-hover">Mening kitoblarim</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -33,6 +40,71 @@
                                 <div class="col-md-12 mt-3">
                                     <a th:href="@{/cabinet/about}" class="btn btn-outline-success btn-block" id="about">About <i class="fas fa-user-tie"></i></a>
                                 </div>
+<!--                                add book-->
+                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                                        id="addBookButton" data-target="#addBook">Add Book</button>
+                                <div class="modal fade" id="addBook" role="dialog">
+                                    <div class="modal-dialog">
+
+                                        <!-- Add book content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Modal Header</h4>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                    <form id="addFormBook" class="form-signin" action="/addBook" method="post">
+
+                                                    <div class="form-label-group">
+                                                        <label for="name">Kitob nomi:</label>
+                                                        <input name="name" type="text" id="name"  class="form-control"
+                                                               placeholder=""  >
+
+                                                    </div>
+
+                                                    <div class="form-label-group">
+                                                        <label for="author">Yozuvchi</label>
+                                                        <input name="author" type="text" id="author"  class="form-control"
+                                                               placeholder=""  >
+
+                                                    </div>
+
+                                                    <div class="form-label-group">
+                                                        <select id="language" name="language" class="form-control"
+                                                                required>
+                                                            <option value="0">O'zbek</option>
+                                                            <option value="1">Rus</option>
+                                                            <option value="2">Kiril</option>
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="form-label-group">
+                                                        <label for="comment">Izoh:</label>
+                                                        <textarea name="comment" type="text" id="comment"  class="form-control"
+                                                                  required></textarea>
+
+                                                    </div>
+
+                                                        <label for="comment">Rasm:</label>
+                                                        <input name="picture" type="file" id="picture"
+                                                                  required>
+
+
+                                                    <input type="submit" value="Submit" data-dismiss="modal" placeholder="Save">
+
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12 mt-3">
                                     <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/cabinet/userlist}" class="btn btn-outline-success btn-block" id="userlist">User List <i class="fas fa-list-ol"></i></a>
                                 </div>
@@ -47,11 +119,63 @@
                         <div class="col-md-10">
                             <div class="content" layout:fragment="main">
                             </div>
+                            <div class="content">
+
+                            </div>
                         </div>
                     </div>
+
+<!--                        my books-->
+                    <div class="card" style="width: 18rem;" id="myBooks">
+
+                    </div>
+<!--                    -->
+
                 </div>
                 <div class="card-footer">
                     <div class="row">
+                        <button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                                id="addAddress" data-target="#addAddressModal">Mening manzilim:</button>
+                        <div class="modal fade" id="addAddressModal" role="dialog">
+                            <div class="modal-dialog">
+
+<!--                                add address-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Modal Header</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form id="addAddressForm" class="form-signin" method="post">
+
+                                            <div class="form-label-group">
+                                                <select id="region" name="regions" class="form-control"
+                                                        required>
+                                                    <option value="0">Viloyatlar</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-label-group">
+                                                <select id="district" name="districts" class="form-control"
+                                                        required>
+                                                    <option value="0">Tumanlar:</option>
+                                                </select>
+                                            </div>
+                                            <input type="submit" id="address" value="Submit" data-dismiss="modal" placeholder="Save">
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
             </div>
@@ -75,12 +199,107 @@
     </div>
 </div>
 
-
 <script th:src="@{/assets/js/jQuery.min.js}"></script>
 <script  th:src="@{/assets/js/src/popover.js}"></script>
 <script th:src="@{/assets/js/bootstrap.js}"></script>
-<!--<script th:src="@{/assets/js/main.js}"></script>-->
+<script th:src="@{/assets/js/main.js}"></script>
 <!--<script th:src="@{/assets/js/card.js}"></script>-->
-<script layout:fragment="scripts"></script>
+<script>
+    $(document).ready(
+        function () {
+            $.ajax({
+                url: "/regions",
+                type: "GET",
+                success: function (regions) {
+                    // $('#region').empty();
+                    $.each(regions, function (i, region) {
+                        $('#region').append($("<option/>", {
+                            value: region.id,
+                            text: region.name
+                        }));
+                    });
+                },
+                error: function (jqXHR, exception) {
+                    console.log(error);
+                }
+            })
+            $('#region').change(function () {
+                var id = this.value;
+                console.log(id)
+                getDistrict(id)
+            })
+        })
+
+    function getDistrict(id) {
+        $.ajax({
+            url: "/districts",
+            data: {regionId: id},
+            type: "GET",
+            success: function (districts) {
+                $('#district').empty();
+                $.each(districts, function (i, district) {
+                    $('#district').append($("<option/>", {
+                        value: district.id,
+                        text: district.name
+                    }));
+                });
+            },
+            error: function (jqXHR, exception) {
+                console.log(error);
+            }
+        })
+    }
+</script>
+<script>
+    $(document).ready(function () {
+           $("#address").click(function () {
+                   $.ajax({
+                           type:'GET',
+                           url:"/districts/" + parseInt($("#region").val())+ "/" +parseInt($("#district").val()),
+                           async:false,
+                           success:function (order){
+
+                           }
+               })
+            });
+
+        $("#addBook").click(function () {
+            $.ajax({
+                type:'GET',
+                url:"/addBook/" + ($("#name").val())+ "/" +($("#author").val())+ "/" +($("#language").val())+ "/" +($("#comment").val()),
+                async:false,
+                success:function (order){}
+            })
+        });
+
+        $("#getMyBooks").click(function () {
+            $.ajax({
+                type:'GET',
+                url:"/actionBook/myBooks",
+                async:false,
+                success:function (data){
+                    var myBooks = $("#myBooks");
+                    for (i = 0; i < data.length; i++) {
+                        // console.log(data[i]);
+                            myBooks.append('<img class="card-img-top" src="" alt="Card image cap">');
+                            myBooks.append("<h5> " + data[i].name + "</h5>");
+                            myBooks.append("<h5> " + data[i].author + "</h5>");
+                            myBooks.append("<h5> " + data[i].language + "</h5>");
+                            myBooks.append("<p> " + data[i].comment + "</p>");
+                    }
+
+                    // console.log(data);
+                    // $.each(data, function(i, books){
+                    //
+                    // });
+
+                }                           })
+        });
+    });
+
+
+
+
+</script>
 </body>
 </html>

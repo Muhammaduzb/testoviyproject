@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
             result.setSuccess(false);
             result.setMessage("This username or email already exist");
         } else {
-            String random_int = String.valueOf((Math.random() * (99999 - 10000 + 1) + 10000)).substring(0,5);
+            String random_int = String.valueOf((Math.random() * (99999 - 10000 + 1) + 10000)).substring(0,4);
             System.out.println("random:" + random_int);
             User user=new User(registerReq.getUsername(),
                     passwordEncoder.encode(registerReq.getPassword()),
