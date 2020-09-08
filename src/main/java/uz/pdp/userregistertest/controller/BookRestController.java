@@ -53,23 +53,34 @@ public class AddBookController {
          addBookService.addUserAddress(region,district);
             }
 
-    @GetMapping("/addBook/{name}/{author}/{language}/{comment}")
-        public void addBook(@PathVariable("name") String name,@PathVariable("author") String author,
-                            @PathVariable("language") String language,@PathVariable("comment") String comment){
-             addBookService.addBook(name,author,language,comment);
-                }
-//    @GetMapping("/addBook/{name}/{author}/{language}/{comment}/{file}")
-//            public void addBook(@PathVariable("name") String name,@PathVariable("author") String author,
-//                                @PathVariable("language") String language,@PathVariable("comment") String comment,
-//                                @PathVariable("file") MultipartFile file) throws IOException {
-//                 addBookService.addBook(name,author,language,comment,file);
-//                    }
+//    @PostMapping("/addBook")
+//        public void addBook(HttpServletRequest httpServletRequest){
+////             addBookService.addBook(name,author,language,comment);
+//        String name = httpServletRequest.getParameter("name");
+//        String author = httpServletRequest.getParameter("author");
+//        String comment = httpServletRequest.getParameter("comment");
+//        String language = httpServletRequest.getParameter("language");
+//
+//
+//        System.out.println("Hhtp request" + httpServletRequest);
+//                }
+
+    @PostMapping("/actionBook/addBook/{name}/{author}/{language}/{comment}")
+    public void addBook(final @RequestParam("file") MultipartFile file,final @PathVariable("name") String name,
+                        final @PathVariable("author") String author,final @PathVariable("language") Integer language,
+                        final @PathVariable("comment") String comment) throws IOException {
+        User user =(User) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+        Integer id = user.getId();
+        System.out.println(file.getBytes()+ "--------------  " + name + author + language + comment +id);
+        addBookService.addBook(file.getBytes(),name,author,language,comment,id);
+                    }
 
     @GetMapping("/actionBook/myBooks")
     @ResponseBody
     public List<Book> getMyBooks(){
-
-
         User user =(User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
@@ -78,4 +89,5 @@ public class AddBookController {
 
         return bookRepository.getMyBooks(id);
     }
+
 }
