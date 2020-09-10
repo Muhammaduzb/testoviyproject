@@ -2,86 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>signup</title>
-    <style>
-        .row {
-            padding-top: 1rem;
-        }
-
-        body {
-            background-color: #ffffff;
-            color: #f1f1f1;
-        }
-
-        .container {
-            background-color: white;
-            border-radius: 20px;
-        }
-    </style>
-    <link rel="stylesheet" href="../static/assets/css/bootstrap.css" th:href="@{/assets/css/bootstrap.css}"/>
-    <link rel="stylesheet" href="../static/assets/plugins/toaster/dist/jquery.toast.min.css"
-          th:href="@{/assets/plugins/jquery-toast-plugin-master/dist/jquery.toast.min.css}"/>
-
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style1.css}">
 </head>
 <body>
-<div class="container pt-4 pb-5 text-center">
-    <div class="row">
-        <div class="col-md-6 offset-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-center text-success">Activation</h3>
+<section class="w3l-login-6">
+    <div class="login-hny">
+        <div class="form-content">
+            <div class="form-right">
+                <div class="overlay">
+                    <div class="grid-info-form">
+                        <h3> </h3>
+                    </div>
                 </div>
-                <form method="post" th:action="@{/auth/wActivate/user}" th:object="${activationReq}">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label>Enter active code<sup class="text-danger">*</sup></label>
-                            <input type="text" class="form-control" name="activeCode" maxlength="4"
-                                   required pattern="[0-9]{4}$"
-                                   oninvalid="this.setCustomValidity('Iltimos 4 honali aktiv kodni kiriting')"
-                                   oninput="setCustomValidity('')" placeholder="Aktiv kodni kiriting!"/>
-
-                            <!--                            <span class="text-danger" th:if="${#fields.hasErrors('activeCode')}" th:errors="*{activeCode}"></span>-->
-                        </div>
+            </div>
+            <div class="form-left">
+                <div class="middle">
+                    <h4>Aktive qilish</h4>
+                </div>
+                <form th:action="@{/auth/wActivate/user}" th:object="${activationReq}" method="post" class="signin-form">
+                    <div class="form-input">
+                        <label>Enter active code<sup class="text-danger">*</sup></label>
+                        <input type="text" class="form-control" name="activeCode" maxlength="4"
+                               required pattern="[0-9]{4}$"
+                               oninvalid="this.setCustomValidity('Iltimos 4 honali aktiv kodni kiriting')"
+                               oninput="setCustomValidity('')" placeholder="Aktiv kodni kiriting!"/>
                     </div>
-                    <div class="row">
-                    </div>
-
                     <div class="row mt-2">
                         <div class="col-md-12">
-                            <button id="registerbtn" class="btn btn-primary" type="submit">Register</button>
+                            <button id="registerbtn" class="btn btn-primary" type="submit">Aktiv qilish</button>
                         </div>
                     </div>
                 </form>
-
                 <div class="pad-all">
-                    <a href="/auth/sign/in" class="btn-link mar-lft">Already account?</a>
+                    <a href="/auth/login" class="btn-link mar-lft">Ro'yhatdan o'tganmisiz?</a>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!--<script>-->
-<!--    $(document).ready(function () {-->
-<!--        $("#registerbtn").click(function () {-->
-<!--            $.ajax({-->
-<!--                type: 'GET',-->
-<!--                url: "http://localhost/auth/activate/user/?activeCode=" + ($("#activeCode").val()),-->
-<!--                async: false,-->
-<!--                success: function () {-->
-<!--                    alert("code is success!!")-->
-<!--                },-->
-<!--                error: function (data) {-->
-<!--                    alert(data);-->
-<!--                }-->
-<!--            })-->
-<!--        })-->
-<!--    });-->
-
-
-<!--</script>-->
-
+</section>
 <script th:href="@{/assets/js/bootstrap.js}"></script>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </body>
 </html>

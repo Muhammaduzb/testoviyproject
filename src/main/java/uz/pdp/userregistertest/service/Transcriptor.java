@@ -1,5 +1,7 @@
 package uz.pdp.userregistertest.service;
 
+import com.ibm.icu.text.Transliterator;
+
 /**
  * created by Muhammad
  * on 26.08.2020
@@ -7,4 +9,11 @@ package uz.pdp.userregistertest.service;
 
 
 public class Transcriptor {
+
+    String CYRILLIC_TO_LATIN = "Cyrillic-Latin";
+
+    public String getRu(String word) {
+        Transliterator toLatinTrans = Transliterator.getInstance(CYRILLIC_TO_LATIN);
+        return toLatinTrans.transliterate(word);
+        }
 }

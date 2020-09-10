@@ -21,6 +21,6 @@ import javax.persistence.Id;
 public class UserAddress {
     @Id
     private Integer userId;
-    private Integer region;
-    private Integer district;
+    private Integer regionId;
+    private Integer districtId;
 }

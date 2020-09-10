@@ -2,15 +2,11 @@ package uz.pdp.userregistertest.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import uz.pdp.userregistertest.entity.User;
 import uz.pdp.userregistertest.model.Result;
 import uz.pdp.userregistertest.payload.ActivationRequest;
 import uz.pdp.userregistertest.payload.RegisterReq;
@@ -20,9 +16,6 @@ import uz.pdp.userregistertest.service.UserService;
 
 
 import javax.validation.Valid;
-import java.security.Principal;
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
@@ -57,24 +50,14 @@ public class AuthController {
                                BindingResult bindingResult,
                                Model model) {
         model.addAttribute("registerReq", registerReq);
-//        Optional<String> optionalS = SecurityUtils.getCurrentUser();
-
-//        System.out.println("user : " + optionalS.get().toString());
         if (bindingResult.hasErrors()) {
             return "register";
         } else {
             userService.saveUser(registerReq);
             return "activation";
-//            return "activation";
         }
     }
 
-//    @GetMapping("/activate/user")
-//    public String activeUser(Model model,ActivationRequest activationRequest)
-//    {
-//        model.addAttribute("activationReq",activationRequest);
-//        return "activation";
-//    }
 
     @GetMapping(value = {"/activate/user"})
     public String getActivePage(Model model,ActivationRequest activationRequest) {

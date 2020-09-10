@@ -24,10 +24,10 @@ public class Book {
     private Integer id;
     private String name;
     private String author;
-    private String language;
+    private Integer language;
     private String comment;
     private Timestamp timestamp;
-    @Column(name = "picByte", length = 1000)
-    private byte[] picByte;
+//    @Column(name = "picByte", length = 1000)
+    private byte[] photo;
     private Integer userId;
 }

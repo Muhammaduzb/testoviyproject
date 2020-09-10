@@ -2,7 +2,7 @@ $(document).ready(function () {
     var userId = '';
     var userForm = $('#userForm');
 
-    var userTable = $('#userTable').DataTable({
+    var userTable = $('#getUsers').DataTable({
         ajax: {
             url: "/cabinet/users/list",
             type: "GET",
@@ -11,15 +11,6 @@ $(document).ready(function () {
         columns: [
             {title: "id", data: "id"},
             {title: "name", data: "username"},
-            {
-                title: "roles", data: "roles", render: function (data, type, row) {
-                    var roleNames = '';
-                    data.forEach(function (role) {
-                        roleNames += ('<input type="checkbox" checked disabled id=' + role.name + ' name=' + role.name + '> ' + role.name + ' </input>');
-                    });
-                    return roleNames;
-                }
-            },
             {title: "Locked", data: "accountNonLocked"},
             {title: "enabled", data: "enabled"},
             {

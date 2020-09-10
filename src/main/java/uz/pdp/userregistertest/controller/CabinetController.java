@@ -1,18 +1,30 @@
 package uz.pdp.userregistertest.controller;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import uz.pdp.userregistertest.DAO.BookDAO;
+import uz.pdp.userregistertest.DAO.BookDaoDefault;
+import uz.pdp.userregistertest.entity.Book;
 import uz.pdp.userregistertest.entity.User;
-import uz.pdp.userregistertest.repository.RoleRepository;
-import uz.pdp.userregistertest.repository.UserRepository;
+import uz.pdp.userregistertest.entity.UserAddress;
+import uz.pdp.userregistertest.repository.*;
 import uz.pdp.userregistertest.security.SignedUser;
+import uz.pdp.userregistertest.service.GetBookService;
 
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @Controller
 public class CabinetController {
@@ -26,7 +38,10 @@ public class CabinetController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @GetMapping({"/", "/cabinet"})
+    @Autowired
+    GetBookService bookService;
+
+    @GetMapping({"/cabinet"})
     public String getCabinetPage(Model model) {
 
         User user =(User) SecurityContextHolder
@@ -85,6 +100,69 @@ public class CabinetController {
         return "/cabinet/userlist";
     }
 
+     @GetMapping("/actionBook/editBook/{id}")
+        public String editBook(Model model,@PathVariable("id")Integer id) {
+         BookDAO bookDAO = bookService.getMyBook(id);
+         model.addAttribute("forEditBook", bookDAO);
+            return "editBook";
+        }
+
+    @Autowired
+    BookRepository bookRepository;
+    @Autowired
+    UserAddressRepository userAddressRepository;
+    @Autowired
+    RegionRepo regionRepo;
+    @Autowired
+    DistrictRepo districtRepo;
+
+    @GetMapping("/")
+    public String listAllBook(Model model,@RequestParam(value = "page",
+      required = false,defaultValue = "0") Integer page){
+          Page<Book> pageBook = bookRepository.findAll(
+                  PageRequest.of(page,6));
+          List<Book> list = pageBook.getContent();
+          List<BookDaoDefault> bookDAOList = new ArrayList<>();
+        String language = null;
+        for (int i = 0; i < list.size(); i++) {
+           Integer id =  list.get(i).getUserId();
+            String username = userRepository.findById(id).get().getUsername();
+            Integer regionId = userAddressRepository.getMyRegionId(id).getRegionId();
+            String region = regionRepo.getMyRegionName(regionId).getName();
+            Integer districtId = userAddressRepository.getMyRegionId(id).getDistrictId();
+            String district = districtRepo.getMyDistrictName(districtId).getName();
+//            byte[] picture = list.get(i).getPhoto();
+
+            byte[] encodeBase64 = Base64.encodeBase64(list.get(i).getPhoto());
+            String picture = null;
+            try {
+                picture = new String(encodeBase64, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            System.out.println("list size " + i + " " + list.get(i));
+            if (list.get(i).getLanguage() == 0) {
+                language = "O'zbek";
+            } else if (list.get(i).getLanguage() == 1) {
+                language = "Rus";
+            } else if (list.get(i).getLanguage() == 2) {
+                language = "Kiril";
+            } else if (list.get(i).getLanguage() == 3) {
+                language = "English";
+            } else if (list.get(i).getLanguage() == 4) {
+                language = "Boshqa";
+            }
+
+            bookDAOList.add(i,new BookDaoDefault(list.get(i).getId(),picture,username,
+                    list.get(i).getName(),list.get(i).getAuthor(),language,list.get(i).getComment(),district,region));
+        }
+        final Page<BookDaoDefault> bookDAOPage = new PageImpl<>(bookDAOList);
+
+          model.addAttribute("bookPage",bookDAOPage);
+//          model.addAttribute("userAddress",userAddresses);
+          model.addAttribute("numbers", IntStream.range(0,pageBook.getTotalPages()).toArray());
+        return "cabinet";
+      };
 //    @PutMapping("/cabinet/user/edit/{id}")
 //    @ResponseBody
 //    public Result editUser(@Valid @RequestBody UserReq userReq,

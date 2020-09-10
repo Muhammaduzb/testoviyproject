@@ -1,10 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Kitobni o'zgartirish</title>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style1.css}">
 </head>
 <body>
-$END$
+<div class="row">
+    <!--                                <div class="col-md-12 mt-3">-->
+    <!--                                    <a th:href="@{/cabinet/about}" class="btn btn-outline-success btn-block" id="about">About <i class="fas fa-user-tie"></i></a>-->
+    <!--                                </div>-->
+    <!--                                add book-->
+
+    <div class="" id="addBook" role="dialog">
+        <div class="">
+
+            <!-- Add book content-->
+            <div class="" id="modalContent">
+                <div class="">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                    <form name="addFormBook" class="form-signin">
+
+                        <div class="form-label-group">
+                            <label for="name">Kitob nomi:</label>
+                            <input name="name" type="text" id="name"  class="form-control"
+                                   placeholder=""  >
+
+                        </div>
+
+                        <div class="form-label-group">
+                            <label for="author">Yozuvchi:</label>
+                            <input name="author" type="text" id="author"  class="form-control"
+                                   placeholder=""  >
+
+                        </div>
+
+                        <div class="form-label-group">
+                            <label for="language">Tilni tanlang:</label>
+                            <select id="language" name="language" class="form-control"
+                                    required>
+                                <option value="0">O'zbek</option>
+                                <option value="1">Rus</option>
+                                <option value="2">Kiril</option>
+                                <option value="3">English</option>
+                                <option value="4">Boshqa</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-label-group">
+                            <label for="comment">Izoh:</label>
+                            <textarea name="comment" type="text" id="comment"  class="form-control"
+                                      required></textarea>
+
+                        </div>
+
+                        <label for="comment">Rasm:</label>
+                        <input class="btn" name="picture" type="file" id="picture"
+                               required>
+
+
+                        <input type="submit" class="btn btn-success" value="Saqlash" id="addMyBook" data-dismiss="modal">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
 </body>
 </html>

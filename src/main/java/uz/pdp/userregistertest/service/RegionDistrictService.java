@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uz.pdp.userregistertest.entity.District;
 import uz.pdp.userregistertest.entity.Region;
+import uz.pdp.userregistertest.entity.UserAddress;
 import uz.pdp.userregistertest.repository.DistrictRepo;
 import uz.pdp.userregistertest.repository.RegionRepo;
+import uz.pdp.userregistertest.repository.UserAddressRepository;
 
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class RegionDistrictService {
     @Autowired
     DistrictRepo districtRepo;
 
+    @Autowired
+    UserAddressRepository userAddressRepository;
+
     public List<Region> getAllRegions(){
         return regionRepo.findAll();
     }
@@ -31,5 +36,8 @@ public class RegionDistrictService {
         return districtRepo.getByRegionId(id);
     }
 
+    public UserAddress userAddress(Integer id){
 
+        return userAddressRepository.findById(id).get();
+    }
 }
