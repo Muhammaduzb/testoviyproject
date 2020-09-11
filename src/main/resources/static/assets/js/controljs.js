@@ -211,64 +211,9 @@ $(document).ready(function(){
         });
 
     });
-    // $("#getUsers").click(function(){
-    //     $.ajax({
-    //         url:"/"
-    //         type: "GET",
-    //         processData: false,
-    //         contentType: false,
-    //         success: function (result) {
-    //
-    //         }
-    //     });
-    //
-    // });
+
 
 });
-// $(window).scroll(function() {
-//     if($(window).scrollTop() === $(document).height() - $(window).height()) {
-//         // ajax call get data from server and append to the div
-//         $.ajax({
-//             type:'GET',
-//             url:"/actionBook/myBooks",
-//             async:false,
-//             success:function (data){
-//                 var myBooks = $("#myBooks");
-//                 // $("#myBooks").empty();
-//                 // $("#mySearchedBooks").empty();
-//                 // $("#allBooks").empty();
-//                 for (i = 0; i < data.length; i++) {
-//                     var bookId = data[i].bookid;
-//                     // myBooks.append('<img class="" th:src="@{data:image/jpg;base64,'+data[i].picture+'}" alt="Card image cap"/>');
-//                     myBooks.append("<div class='card'>" +
-//                         "<div class='img'>"+
-//                         '<img  src="data:image/jpg;base64,'+data[i].picture+'"/>'+"</div>"+
-//                         "<div class='content'>" + "<p class='title'> " + data[i].name + "</p>"           +
-//                         "<p class='copy'> " + data[i].username + " " + data[i].author + " " +data[i].language +" "
-//                         +data[i].comment +" " +data[i].region +" " +data[i].district +"</p>" +
-//                         "<input type='button' class='card1-btn' value='O`zgartirish'>"+
-//                         "<input type='button' class='card2-btn' value='O`chirish' data-toggle='modal' data-target='#deleteBookModal'>"+
-//                         "</div></div>");
-//                       $("#deleteBook").click(function(){
-//                         $.ajax({
-//                             url:"/actionBook/deleteMyBook/"+parseInt(bookId),
-//                             type: "POST",
-//                             processData: false,
-//                             contentType: false,
-//                             success: function (result) {
-//
-//                             }
-//                         });
-//
-//                     });
-//                     $("#editBookModal").on("show.bs.modal", function(event){
-//                         // Place the returned HTML into the selected element
-//                         $(this).find(".modal-body").load("/actionBook/editBook/"+data[i].id)})
-//                 }
-//
-//             }                           })
-//     }
-// });
 
 function checkAddressExist() {
 
@@ -295,6 +240,9 @@ function errorGettingAddress(jqXHR, exception) {
         msg = 'Not connect.\n Verify Network.';
     } else if (jqXHR.status == 404) {
         msg = 'Requested page not found. [404]';
+    }else if (jqXHR.status == null) {
+        console.log(jqXHR.status);
+        msg = 'Iltimos avval manzilni kiriting!';
     } else if (jqXHR.status == 500) {
         msg = 'Iltimos avval manzilni kiriting!';
     } else if (exception === 'parsererror') {
