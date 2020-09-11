@@ -71,7 +71,7 @@
             <li><button sec:authorize="hasRole('ROLE_USER')" class='btn btn-outline-secondary mb-2' id="getMyBooks">Mening kitoblarim <i
                     class="fas fa-list-ol"></i></button></li>
             <li>
-                <a href="/auth/sign/up" class='btn btn-outline-secondary mb-2' style="padding-left: 30px;
+                <a href="/auth/sign/up" sec:authorize="isAnonymous()" class='btn btn-outline-secondary mb-2' style="padding-left: 30px;
                 padding-right: 30px;background: #fff;"onmouseover="this.style.backgroundColor='#6C757D';" onmouseout="this.style.backgroundColor='#fff'">
                     Royhatdan o'tish <i class="fas fa-sign-out-alt"></i></a> </li>
 
